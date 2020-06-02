@@ -8,20 +8,30 @@ namespace ObjectMapperBenchMark.Extensions
     {
         public static void Setup(this Mock<IDataReader> reader)
         {
-            reader.Setup(m => m.FieldCount).Returns(2);
+            reader.Setup(m => m.FieldCount).Returns(5);
             reader.Setup(m => m.GetName(0)).Returns("Id");
-            reader.Setup(m => m.GetName(1)).Returns("Name");
+            reader.Setup(m => m.GetName(1)).Returns("Integer");
+            reader.Setup(m => m.GetName(2)).Returns("Decimal");
+            reader.Setup(m => m.GetName(3)).Returns("String");
+            reader.Setup(m => m.GetName(4)).Returns("Date");
 
-            reader.Setup(m => m.GetFieldType(0)).Returns(typeof(Guid));
-            reader.Setup(m => m.GetFieldType(1)).Returns(typeof(string));
+            reader.Setup(m => m["Id"]).Returns(Guid.NewGuid());
+            reader.Setup(m => m["Integer"]).Returns(int.MaxValue);
+            reader.Setup(m => m["Decimal"]).Returns(decimal.MaxValue);
+            reader.Setup(m => m["String"]).Returns("Hello World");
+            reader.Setup(m => m["Date"]).Returns(DateTime.UtcNow);
+        }
 
-            reader.Setup(m => m.GetValue(0)).Returns(Guid.Empty);
-            reader.Setup(m => m.GetValue(1)).Returns(string.Empty);
+        public static void SetupRows(this Mock<IDataReader> reader, int rows)
+        {
+            var sequence = reader.SetupSequence(m => m.Read());
 
-            reader.SetupSequence(m => m.Read())
-                .Returns(true)
-                .Returns(true)
-                .Returns(false);
+            for (int i = 0; i < rows; i++)
+            {
+                sequence.Returns(true);
+            }
+
+            sequence.Returns(false);
         }
     }
 }

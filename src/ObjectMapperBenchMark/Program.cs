@@ -1,4 +1,5 @@
-﻿using BenchmarkDotNet.Running;
+﻿using System;
+using BenchmarkDotNet.Running;
 using ObjectMapperBenchMark.Mappers;
 
 namespace ObjectMapperBenchMark
@@ -7,7 +8,8 @@ namespace ObjectMapperBenchMark
     {
         static void Main(string[] args)
         {
-            var summary = BenchmarkRunner.Run<JsonObjectMapperBenchMark>();
+            var summary = BenchmarkRunner.Run<FastMemberObjectMapperBenchMark>();
+            Console.ReadKey();
         }
     }
 }

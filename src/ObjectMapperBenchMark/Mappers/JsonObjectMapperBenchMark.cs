@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using BenchmarkDotNet.Attributes;
@@ -11,15 +12,15 @@ namespace ObjectMapperBenchMark.Mappers
 {
     public class JsonObjectMapperBenchMark
     {
-        private Consumer consumer;
+        private const int ROWS = 10000;
         private Mock<IDataReader> reader;
-
+        private Consumer consumer;
 
         [GlobalSetup]
         public void GlobalSetup()
         {
-            this.consumer = new Consumer();
             this.reader = new Mock<IDataReader>();
+            this.consumer = new Consumer();
             this.reader.Setup();
         }
 
@@ -29,21 +30,39 @@ namespace ObjectMapperBenchMark.Mappers
             this.reader = null;
         }
 
-        [Benchmark]
-        public void AsArray()
+        [IterationSetup]
+        public void IterationSetup()
         {
-            var dictionary = this.Serialize(this.reader.Object);
-            var json = JsonConvert.SerializeObject(dictionary);
-            var result = JsonConvert.DeserializeObject<IEnumerable<Model>>(json, Settings);
-            result.Consume(this.consumer);
+            this.reader.SetupRows(ROWS);
         }
 
         [Benchmark]
         public Model As()
         {
-            var dictionary = this.Serialize(this.reader.Object).FirstOrDefault();
+            var result = this.AsJson<Model>(this.reader.Object);
+            return result;
+        }
+
+        [Benchmark]
+        public void AsArray()
+        {
+            var result = this.AsArrayJson<IEnumerable<Model>>(this.reader.Object);
+            result.Consume(this.consumer);
+        }
+
+        private T AsArrayJson<T>(IDataReader reader) where T : IEnumerable
+        {
+            var dictionary = this.Serialize(reader);
             var json = JsonConvert.SerializeObject(dictionary);
-            var result = JsonConvert.DeserializeObject<Model>(json, Settings);
+            var result = JsonConvert.DeserializeObject<T>(json, this.Settings);
+            return result;
+        }
+
+        private T AsJson<T>(IDataReader reader) where T : class
+        {
+            var dictionary = this.Serialize(reader).FirstOrDefault();
+            var json = JsonConvert.SerializeObject(dictionary);
+            var result = JsonConvert.DeserializeObject<T>(json, this.Settings);
             return result;
         }
 
@@ -75,7 +94,7 @@ namespace ObjectMapperBenchMark.Mappers
             return result;
         }
 
-        private static readonly JsonSerializerSettings Settings = new JsonSerializerSettings
+        private readonly JsonSerializerSettings Settings = new JsonSerializerSettings
         {
             NullValueHandling = NullValueHandling.Ignore,
             MissingMemberHandling = MissingMemberHandling.Ignore
