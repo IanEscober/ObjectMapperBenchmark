@@ -2,9 +2,9 @@
 A simple benchmark using [BenchmarkDotNet](https://github.com/dotnet/BenchmarkDotNet) for the different techniques of mapping database data to objects.
 
 ## Mapping Techniques
-1. Json Serialize-Deserialize - Uses [Newtonsoft.Json](https://www.nuget.org/packages/Newtonsoft.Json/) library to serialize a dictionary of property names and its value then deserialzing it to an object.
-2. Reflection - Hand made plain old reflection.
-3. FastMember Reflection - Uses Marc Gravell's [FastMember Library](https://github.com/mgravell/fast-member) that improves reflection performance.
+1. [Json Serialize-Deserialize](https://github.com/IanEscober/ObjectMapperBenchmark/blob/master/src/ObjectMapperBenchMark/Mappers/JsonObjectMapperBenchMark.cs) - Uses [Newtonsoft.Json](https://www.nuget.org/packages/Newtonsoft.Json/) library to serialize a dictionary of property names and its value then deserialzing it to an object.
+2. [Reflection](https://github.com/IanEscober/ObjectMapperBenchmark/blob/master/src/ObjectMapperBenchMark/Mappers/ReflectionObjectMapperBenchMark.cs) - Hand made plain old reflection.
+3. [FastMember Reflection](https://github.com/IanEscober/ObjectMapperBenchmark/blob/master/src/ObjectMapperBenchMark/Mappers/FastMemberObjectMapperBenchMark.cs) - Uses Marc Gravell's [FastMember Library](https://github.com/mgravell/fast-member) that improves reflection performance.
 
 ## Methods
 1. `As()` - Maps a single row to an object.
