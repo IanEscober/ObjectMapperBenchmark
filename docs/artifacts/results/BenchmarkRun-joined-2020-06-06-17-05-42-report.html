@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='utf-8' />
+<title>BenchmarkRun-joined-2020-06-06-17-05-42</title>
+
+<style type="text/css">
+	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
+	td, th { padding: 6px 13px; border: 1px solid #ddd; text-align: right; }
+	tr { background-color: #fff; border-top: 1px solid #ccc; }
+	tr:nth-child(even) { background: #f8f8f8; }
+</style>
+</head>
+<body>
+<pre><code>
+BenchmarkDotNet=v0.12.1, OS=Windows 10.0.18362.836 (1903/May2019Update/19H1)
+Intel Core i7-3630QM CPU 2.40GHz (Ivy Bridge), 1 CPU, 8 logical and 4 physical cores
+.NET Core SDK=2.2.110
+  [Host]     : .NET Core 2.2.8 (CoreCLR 4.6.28207.03, CoreFX 4.6.28208.02), X64 RyuJIT
+  Job-KJGQXT : .NET Core 2.2.8 (CoreCLR 4.6.28207.03, CoreFX 4.6.28208.02), X64 RyuJIT
+</code></pre>
+<pre><code>InvocationCount=1  UnrollFactor=1  
+</code></pre>
+
+<table>
+<thead><tr><th>                     Type</th><th>Method</th><th>Rows</th><th>    Mean</th><th> Error</th><th>StdDev</th><th>  Median</th>
+</tr>
+</thead><tbody><tr><td>FastMemberObjectMapperBenchMark</td><td>As</td><td>10</td><td>863.6 &mu;s</td><td>15.19 &mu;s</td><td>12.68 &mu;s</td><td>870.5 &mu;s</td>
+</tr><tr><td>JsonObjectMapperBenchMark</td><td>As</td><td>10</td><td>695.6 &mu;s</td><td>13.20 &mu;s</td><td>30.60 &mu;s</td><td>691.0 &mu;s</td>
+</tr><tr><td>ReflectionObjectMapperBenchMark</td><td>As</td><td>10</td><td>944.5 &mu;s</td><td>16.96 &mu;s</td><td>28.80 &mu;s</td><td>941.9 &mu;s</td>
+</tr><tr><td>FastMemberObjectMapperBenchMark</td><td>AsArray</td><td>10</td><td>8,395.1 &mu;s</td><td>165.23 &mu;s</td><td>220.57 &mu;s</td><td>8,354.2 &mu;s</td>
+</tr><tr><td>JsonObjectMapperBenchMark</td><td>AsArray</td><td>10</td><td>2,671.5 &mu;s</td><td>53.26 &mu;s</td><td>137.47 &mu;s</td><td>2,609.4 &mu;s</td>
+</tr><tr><td>ReflectionObjectMapperBenchMark</td><td>AsArray</td><td>10</td><td>8,392.6 &mu;s</td><td>144.47 &mu;s</td><td>128.07 &mu;s</td><td>8,419.9 &mu;s</td>
+</tr><tr><td>FastMemberObjectMapperBenchMark</td><td>As</td><td>100</td><td>860.2 &mu;s</td><td>17.08 &mu;s</td><td>21.60 &mu;s</td><td>857.1 &mu;s</td>
+</tr><tr><td>JsonObjectMapperBenchMark</td><td>As</td><td>100</td><td>739.3 &mu;s</td><td>23.16 &mu;s</td><td>66.82 &mu;s</td><td>715.5 &mu;s</td>
+</tr><tr><td>ReflectionObjectMapperBenchMark</td><td>As</td><td>100</td><td>954.6 &mu;s</td><td>18.09 &mu;s</td><td>44.36 &mu;s</td><td>940.7 &mu;s</td>
+</tr><tr><td>FastMemberObjectMapperBenchMark</td><td>AsArray</td><td>100</td><td>83,540.8 &mu;s</td><td>436.69 &mu;s</td><td>408.48 &mu;s</td><td>83,499.5 &mu;s</td>
+</tr><tr><td>JsonObjectMapperBenchMark</td><td>AsArray</td><td>100</td><td>22,165.1 &mu;s</td><td>437.49 &mu;s</td><td>409.23 &mu;s</td><td>22,076.4 &mu;s</td>
+</tr><tr><td>ReflectionObjectMapperBenchMark</td><td>AsArray</td><td>100</td><td>83,895.8 &mu;s</td><td>589.42 &mu;s</td><td>551.34 &mu;s</td><td>83,838.1 &mu;s</td>
+</tr><tr><td>FastMemberObjectMapperBenchMark</td><td>As</td><td>10000</td><td>990.7 &mu;s</td><td>19.81 &mu;s</td><td>40.47 &mu;s</td><td>997.6 &mu;s</td>
+</tr><tr><td>JsonObjectMapperBenchMark</td><td>As</td><td>10000</td><td>835.3 &mu;s</td><td>16.52 &mu;s</td><td>35.57 &mu;s</td><td>832.1 &mu;s</td>
+</tr><tr><td>ReflectionObjectMapperBenchMark</td><td>As</td><td>10000</td><td>1,080.0 &mu;s</td><td>21.42 &mu;s</td><td>50.07 &mu;s</td><td>1,090.9 &mu;s</td>
+</tr><tr><td>FastMemberObjectMapperBenchMark</td><td>AsArray</td><td>10000</td><td>8,298,352.8 &mu;s</td><td>43,828.76 &mu;s</td><td>38,853.05 &mu;s</td><td>8,294,833.4 &mu;s</td>
+</tr><tr><td>JsonObjectMapperBenchMark</td><td>AsArray</td><td>10000</td><td>2,148,111.2 &mu;s</td><td>27,813.83 &mu;s</td><td>23,225.81 &mu;s</td><td>2,136,445.5 &mu;s</td>
+</tr><tr><td>ReflectionObjectMapperBenchMark</td><td>AsArray</td><td>10000</td><td>8,408,124.8 &mu;s</td><td>80,225.57 &mu;s</td><td>75,043.05 &mu;s</td><td>8,376,021.8 &mu;s</td>
+</tr></tbody></table>
+</body>
+</html>
