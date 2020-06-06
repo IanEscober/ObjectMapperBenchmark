@@ -11,9 +11,11 @@ namespace ObjectMapperBenchMark.Mappers
 {
     public class ReflectionObjectMapperBenchMark
     {
-        private const int ROWS = 10000;
         private Mock<IDataReader> reader;
         private Consumer consumer;
+
+        [Params(10, 100, 10000)]
+        public int Rows { get; set; }
 
         [GlobalSetup]
         public void GlobalSetup()
@@ -32,7 +34,7 @@ namespace ObjectMapperBenchMark.Mappers
         [IterationSetup]
         public void IterationSetup()
         {
-            this.reader.SetupRows(ROWS);
+            this.reader.SetupRows(this.Rows);
         }
 
         [Benchmark]

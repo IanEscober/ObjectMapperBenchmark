@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Engines;
 using Moq;
@@ -12,9 +11,11 @@ namespace ObjectMapperBenchMark.Mappers
 {
     public class JsonObjectMapperBenchMark
     {
-        private const int ROWS = 10000;
         private Mock<IDataReader> reader;
         private Consumer consumer;
+
+        [Params(10, 100, 10000)]
+        public int Rows { get; set; }
 
         [GlobalSetup]
         public void GlobalSetup()
@@ -33,7 +34,7 @@ namespace ObjectMapperBenchMark.Mappers
         [IterationSetup]
         public void IterationSetup()
         {
-            this.reader.SetupRows(ROWS);
+            this.reader.SetupRows(this.Rows);
         }
 
         [Benchmark]
@@ -52,35 +53,35 @@ namespace ObjectMapperBenchMark.Mappers
 
         private T AsArrayJson<T>(IDataReader reader) where T : IEnumerable
         {
-            var dictionary = this.Serialize(reader);
-            var json = JsonConvert.SerializeObject(dictionary);
+            var rows = new List<Dictionary<string, object>>();
+            var cols = this.GetRowNames(reader);
+            while (reader.Read())
+            {
+                rows.Add(this.SerializeRow(cols, reader));
+            }
+            var json = JsonConvert.SerializeObject(rows);
             var result = JsonConvert.DeserializeObject<T>(json, this.Settings);
             return result;
         }
 
         private T AsJson<T>(IDataReader reader) where T : class
         {
-            var dictionary = this.Serialize(reader).FirstOrDefault();
-            var json = JsonConvert.SerializeObject(dictionary);
+            var cols = this.GetRowNames(reader);
+            var row = this.SerializeRow(cols, reader);
+            var json = JsonConvert.SerializeObject(row);
             var result = JsonConvert.DeserializeObject<T>(json, this.Settings);
             return result;
         }
 
-        private IEnumerable<Dictionary<string, object>> Serialize(IDataReader reader)
+        private IEnumerable<string> GetRowNames(IDataReader reader)
         {
-            var results = new List<Dictionary<string, object>>();
-            var cols = new List<string>();
+            var result = new List<string>();
             for (var i = 0; i < reader.FieldCount; i++)
             {
-                cols.Add(reader.GetName(i));
+                result.Add(reader.GetName(i));
             }
 
-            while (reader.Read())
-            {
-                results.Add(this.SerializeRow(cols, reader));
-            }
-
-            return results;
+            return result;
         }
 
         private Dictionary<string, object> SerializeRow(IEnumerable<string> cols, IDataReader reader)

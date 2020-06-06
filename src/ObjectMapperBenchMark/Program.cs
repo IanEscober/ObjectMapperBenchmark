@@ -1,15 +1,9 @@
-﻿using System;
-using BenchmarkDotNet.Running;
-using ObjectMapperBenchMark.Mappers;
+﻿using BenchmarkDotNet.Running;
 
 namespace ObjectMapperBenchMark
 {
     public class Program
     {
-        static void Main(string[] args)
-        {
-            var summary = BenchmarkRunner.Run<FastMemberObjectMapperBenchMark>();
-            Console.ReadKey();
-        }
+        public static void Main(string[] args) => BenchmarkSwitcher.FromAssembly(typeof(Program).Assembly).Run(args);
     }
 }
