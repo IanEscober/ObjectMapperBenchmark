@@ -18,7 +18,7 @@ namespace ObjectMapperBenchMark.Extensions
             reader.Setup(m => m["Id"]).Returns(Guid.NewGuid());
             reader.Setup(m => m["Integer"]).Returns(int.MaxValue);
             reader.Setup(m => m["Decimal"]).Returns(decimal.MaxValue);
-            reader.Setup(m => m["String"]).Returns("Hello World");
+            reader.Setup(m => m["String"]).Returns(DBNull.Value);
             reader.Setup(m => m["Date"]).Returns(DateTime.UtcNow);
         }
 
