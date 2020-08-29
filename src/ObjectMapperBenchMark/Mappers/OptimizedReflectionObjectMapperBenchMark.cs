@@ -111,16 +111,7 @@ namespace ObjectMapperBenchMark.Mappers
         {
             public static Action<T, object> CreateDowncastDelegate<T>(MethodInfo method)
             {
-                MethodInfo openImpl = typeof(ReflectionOptimizer).GetMethod(nameof(CreateDowncastDelegateImpl));
-                MethodInfo closedImpl = openImpl.MakeGenericMethod(typeof(T), method.GetParameters()[0].ParameterType);
-                return (Action<T, object>)closedImpl.Invoke(null, new object[] { method });
-            }
-
-            public static Action<TSource, object> CreateDowncastDelegateImpl<TSource, TParam>(MethodInfo method)
-            {
-                object tdelegate = Delegate.CreateDelegate(typeof(Action<TSource, TParam>), null, method);
-                Action<TSource, TParam> call = (Action<TSource, TParam>)tdelegate;
-                return delegate (TSource source, object parameter) { call(source, (TParam)parameter); };
+                return (model, value) => method.Invoke(model, new object[] { value });
             }
         }
     }
